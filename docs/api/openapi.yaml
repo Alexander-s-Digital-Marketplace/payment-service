@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  description: Auth service.
+  title: Catering service
+  version: 1.0.0
+servers:
+- url: /
+security:
+- BearerAuth: []
+paths:
+  /login:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_login_post_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_login_post_200_response'
+          description: Success log in
+        "401":
+          description: Incorrect login or password
+      summary: User's login
+  /register:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_register_post_request'
+        required: true
+      responses:
+        "201":
+          description: Success registration
+      summary: New user's registration
+  /refresh-token:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_refresh_token_post_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_login_post_200_response'
+          description: New access token
+        "400":
+          description: Incorrect refresh token
+        "401":
+          description: Refresh token expired
+      summary: Refresh access token
+components:
+  schemas:
+    _refresh_token_post_request:
+      properties:
+        refreshToken:
+          type: string
+      type: object
+    _register_post_request:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+      type: object
+    _login_post_request:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      type: object
+    _login_post_200_response:
+      example:
+        accessToken: accessToken
+      properties:
+        accessToken:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      scheme: bearer
+      type: http
