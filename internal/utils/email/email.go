@@ -3,7 +3,7 @@ package email
 import (
 	"strconv"
 
-	emailconfig "github.com/Alexander-s-Digital-Marketplace/auth-service/.env/email"
+	emailconfig "github.com/Alexander-s-Digital-Marketplace/payment-service/.env/email"
 	"github.com/sirupsen/logrus"
 
 	"gopkg.in/gomail.v2"

@@ -13,10 +13,10 @@ import (
 	"log"
 	"net"
 
-	loggerconfig "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/config/logger"
-	routespkg "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/routes"
-	validaccesstokenfunc "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/services/valid_access_token/valid_access_token_func"
-	pb "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/services/valid_access_token/valid_access_token_gen"
+	loggerconfig "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/config/logger"
+	routespkg "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/routes"
+	validaccesstokenfunc "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/valid_access_token/valid_access_token_func"
+	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/valid_access_token/valid_access_token_gen"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 )

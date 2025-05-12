@@ -1,7 +1,7 @@
 package authmiddlewares
 
 import (
-	validaccesstoken "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/handlers/valid_access_token"
+	validaccesstoken "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/handlers/valid_access_token"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,4 +1,4 @@
-module github.com/Alexander-s-Digital-Marketplace/auth-service
+module github.com/Alexander-s-Digital-Marketplace/payment-service
 
 go 1.23
 
