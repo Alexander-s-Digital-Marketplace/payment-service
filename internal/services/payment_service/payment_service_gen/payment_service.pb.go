@@ -84,7 +84,10 @@ func (x *BuyProductRequest) GetProductPrice() float64 {
 type BuyProductResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	OrderId       int32                  `protobuf:"varint,2,opt,name=OrderId,proto3" json:"OrderId,omitempty"`
+	Address       string                 `protobuf:"bytes,3,opt,name=Address,proto3" json:"Address,omitempty"`
+	SellerAddress string                 `protobuf:"bytes,4,opt,name=SellerAddress,proto3" json:"SellerAddress,omitempty"`
+	ProductPrice  float64                `protobuf:"fixed64,5,opt,name=productPrice,proto3" json:"productPrice,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -126,11 +129,32 @@ func (x *BuyProductResponse) GetCode() int32 {
 	return 0
 }
 
-func (x *BuyProductResponse) GetMessage() string {
+func (x *BuyProductResponse) GetOrderId() int32 {
 	if x != nil {
-		return x.Message
+		return x.OrderId
+	}
+	return 0
+}
+
+func (x *BuyProductResponse) GetAddress() string {
+	if x != nil {
+		return x.Address
 	}
 	return ""
+}
+
+func (x *BuyProductResponse) GetSellerAddress() string {
+	if x != nil {
+		return x.SellerAddress
+	}
+	return ""
+}
+
+func (x *BuyProductResponse) GetProductPrice() float64 {
+	if x != nil {
+		return x.ProductPrice
+	}
+	return 0
 }
 
 type RegisterWalletRequest struct {
@@ -461,10 +485,13 @@ const file_payment_service_proto_rawDesc = "" +
 	"\x11BuyProductRequest\x12$\n" +
 	"\rwalletIdBuyer\x18\x01 \x01(\x05R\rwalletIdBuyer\x12&\n" +
 	"\x0ewalletIdSeller\x18\x02 \x01(\x05R\x0ewalletIdSeller\x12\"\n" +
-	"\fproductPrice\x18\x03 \x01(\x01R\fproductPrice\"B\n" +
+	"\fproductPrice\x18\x03 \x01(\x01R\fproductPrice\"\xa6\x01\n" +
 	"\x12BuyProductResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"=\n" +
+	"\aOrderId\x18\x02 \x01(\x05R\aOrderId\x12\x18\n" +
+	"\aAddress\x18\x03 \x01(\tR\aAddress\x12$\n" +
+	"\rSellerAddress\x18\x04 \x01(\tR\rSellerAddress\x12\"\n" +
+	"\fproductPrice\x18\x05 \x01(\x01R\fproductPrice\"=\n" +
 	"\x15RegisterWalletRequest\x12$\n" +
 	"\rwalletAddress\x18\x01 \x01(\tR\rwalletAddress\"b\n" +
 	"\x16RegisterWalletResponse\x12\x12\n" +

@@ -1,4 +1,4 @@
-package walletmodel
+package models
 
 import (
 	"github.com/Alexander-s-Digital-Marketplace/payment-service/internal/database"

@@ -4,14 +4,14 @@ import (
 	"context"
 	"errors"
 
-	walletmodel "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models/wallet_model"
+	"github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models"
 	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_gen"
 	"github.com/sirupsen/logrus"
 )
 
-func GetBallance(ctx context.Context, req *pb.GetBalanceRequest) (*pb.GetBalanceResponse, error) {
+func (s *Server) GetBallance(ctx context.Context, req *pb.GetBalanceRequest) (*pb.GetBalanceResponse, error) {
 	var code int
-	wallet := walletmodel.Wallet{
+	wallet := models.Wallet{
 		Id: int(req.WalletId),
 	}
 	code = wallet.GetFromTableById()

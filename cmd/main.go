@@ -15,8 +15,8 @@ import (
 
 	loggerconfig "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/config/logger"
 	routespkg "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/routes"
-	validaccesstokenfunc "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/valid_access_token/valid_access_token_func"
-	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/valid_access_token/valid_access_token_gen"
+	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_gen"
+	paymentserviceserver "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_server"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 )
@@ -28,20 +28,20 @@ func main() {
 		routes := routespkg.ApiHandleFunctions{}
 		logrus.Println("Server started")
 		router := routespkg.NewRouter(routes)
-		log.Fatal(router.Run(":8080"))
+		log.Fatal(router.Run(":8083"))
 	}()
 
 	go func() {
-		listener, err := net.Listen("tcp", ":50051")
+		listener, err := net.Listen("tcp", ":50054")
 		if err != nil {
 			log.Fatalf("Failed to listen: %v", err)
 		}
 
 		grpcServer := grpc.NewServer()
 
-		pb.RegisterValidAccessTokenServiceServer(grpcServer, &validaccesstokenfunc.Server{})
+		pb.RegisterPaymentServiceServer(grpcServer, &paymentserviceserver.Server{})
 
-		logrus.Println("gRPC server is running on port :50051")
+		logrus.Println("gRPC server is running on port :50054")
 		if err := grpcServer.Serve(listener); err != nil {
 			log.Fatalf("Failed to serve gRPC server: %v", err)
 		}

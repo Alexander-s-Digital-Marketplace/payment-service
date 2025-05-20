@@ -19,7 +19,10 @@ message BuyProductRequest {
 
 message BuyProductResponse {
   int32 code = 1;
-  string message = 2;
+  int32 OrderId = 2;
+  string Address = 3;
+  string SellerAddress = 4;
+  double productPrice = 5;
 }
 
 

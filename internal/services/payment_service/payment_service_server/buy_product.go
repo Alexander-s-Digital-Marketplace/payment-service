@@ -4,41 +4,50 @@ import (
 	"context"
 	"errors"
 
-	walletmodel "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models/wallet_model"
+	models "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models"
 	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_gen"
-	"github.com/sirupsen/logrus"
 )
 
-func BuyProduct(ctx context.Context, req *pb.BuyProductRequest) (*pb.BuyProductResponse, error) {
+func (s *Server) BuyProduct(ctx context.Context, req *pb.BuyProductRequest) (*pb.BuyProductResponse, error) {
 	var code int
-	walletSeller := walletmodel.Wallet{
+	walletSeller := models.Wallet{
 		Id: int(req.WalletIdSeller),
 	}
 	code = walletSeller.GetFromTableById()
 	if code != 200 {
 		return &pb.BuyProductResponse{
-			Code:    int32(code),
-			Message: "Error get from table",
+			Code: int32(code),
 		}, errors.New("error get from table")
 	}
 
-	walletBuyer := walletmodel.Wallet{
+	walletBuyer := models.Wallet{
 		Id: int(req.WalletIdBuyer),
 	}
 	code = walletBuyer.GetFromTableById()
 	if code != 200 {
 		return &pb.BuyProductResponse{
-			Code:    int32(code),
-			Message: "Error get from table",
+			Code: int32(code),
 		}, errors.New("error get from table")
 	}
 
-	//price := req.ProductPrice
-	//calling smart contract
-	logrus.Infoln("Calling smart contract to buy product")
+	order := models.Order{
+		ContractAddress:     "0x7097449F14dE64590F38A0eAa7ce946DC96fdd3c",
+		SellerWalletAddress: walletSeller.WalletAddress,
+		BuyerWalletAddress:  walletBuyer.WalletAddress,
+		ProductPrice:        req.ProductPrice,
+	}
+	code = order.AddToTable()
+	if code != 200 {
+		return &pb.BuyProductResponse{
+			Code: int32(code),
+		}, errors.New("error create order")
+	}
 
 	return &pb.BuyProductResponse{
-		Code:    int32(code),
-		Message: "Success buy product",
+		Code:          int32(code),
+		OrderId:       int32(order.Id),
+		Address:       order.ContractAddress,
+		SellerAddress: order.SellerWalletAddress,
+		ProductPrice:  order.ProductPrice,
 	}, nil
 }

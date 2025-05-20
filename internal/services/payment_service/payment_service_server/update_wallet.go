@@ -5,14 +5,13 @@ import (
 	"errors"
 	"net/http"
 
-	walletmodel "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models/wallet_model"
+	"github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models"
 	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_gen"
-	"github.com/sirupsen/logrus"
 )
 
-func UpdateWallet(ctx context.Context, req *pb.UpdateWalletRequest) (*pb.UpdateWalletResponse, error) {
+func (s *Server) UpdateWallet(ctx context.Context, req *pb.UpdateWalletRequest) (*pb.UpdateWalletResponse, error) {
 	var code int
-	walletOld := walletmodel.Wallet{
+	walletOld := models.Wallet{
 		Id: int(req.OldWalletId),
 	}
 	code = walletOld.GetFromTableById()
@@ -23,7 +22,7 @@ func UpdateWallet(ctx context.Context, req *pb.UpdateWalletRequest) (*pb.UpdateW
 		}, errors.New("error get from table")
 	}
 
-	walletNew := walletmodel.Wallet{
+	walletNew := models.Wallet{
 		WalletAddress: req.NewWalletAddress,
 	}
 	if walletNew.WalletAddress == walletOld.WalletAddress {
@@ -46,9 +45,6 @@ func UpdateWallet(ctx context.Context, req *pb.UpdateWalletRequest) (*pb.UpdateW
 			Message: "Error delete from table",
 		}, errors.New("error delete from table")
 	}
-
-	//calling smart contract
-	logrus.Infoln("Calling smart contract to update wallet")
 
 	return &pb.UpdateWalletResponse{
 		Code:    int32(code),
