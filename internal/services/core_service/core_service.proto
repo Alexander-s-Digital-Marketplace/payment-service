@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package core;
+
+option go_package = "/core_service";
+
+service CoreService {
+  rpc UpdateSoldProduct (UpdateSoldProductRequest) returns (UpdateSoldProductResponse);
+}
+
+message UpdateSoldProductResponse {
+    int32 code = 1;
+    string message = 2;
+}
+
+message UpdateSoldProductRequest {
+    int32 orderId = 1;
+    int32 productId = 2;
+    int32 walletId = 3;
+}
+
+
+//protoc --go_out=. --go-grpc_out=. core_service.proto
+
+

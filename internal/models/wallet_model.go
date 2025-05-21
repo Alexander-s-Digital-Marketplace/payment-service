@@ -37,6 +37,19 @@ func (w *Wallet) GetFromTableById() int {
 	return 200
 }
 
+func (w *Wallet) GetFromTableByAddress() int {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.Where("wallet_address = ?", w.WalletAddress).First(&w).Error
+	if err != nil {
+		return 503
+	}
+
+	return 200
+}
+
 func (w *Wallet) DeleteFromTable() int {
 	var db database.DataBase
 	db.InitDB()

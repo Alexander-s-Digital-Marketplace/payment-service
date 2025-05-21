@@ -26,6 +26,7 @@ type BuyProductRequest struct {
 	WalletIdBuyer  int32                  `protobuf:"varint,1,opt,name=walletIdBuyer,proto3" json:"walletIdBuyer,omitempty"`
 	WalletIdSeller int32                  `protobuf:"varint,2,opt,name=walletIdSeller,proto3" json:"walletIdSeller,omitempty"`
 	ProductPrice   float64                `protobuf:"fixed64,3,opt,name=productPrice,proto3" json:"productPrice,omitempty"`
+	ProductId      int32                  `protobuf:"varint,4,opt,name=productId,proto3" json:"productId,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -77,6 +78,13 @@ func (x *BuyProductRequest) GetWalletIdSeller() int32 {
 func (x *BuyProductRequest) GetProductPrice() float64 {
 	if x != nil {
 		return x.ProductPrice
+	}
+	return 0
+}
+
+func (x *BuyProductRequest) GetProductId() int32 {
+	if x != nil {
+		return x.ProductId
 	}
 	return 0
 }
@@ -481,11 +489,12 @@ var File_payment_service_proto protoreflect.FileDescriptor
 
 const file_payment_service_proto_rawDesc = "" +
 	"\n" +
-	"\x15payment_service.proto\x12\apayment\"\x85\x01\n" +
+	"\x15payment_service.proto\x12\apayment\"\xa3\x01\n" +
 	"\x11BuyProductRequest\x12$\n" +
 	"\rwalletIdBuyer\x18\x01 \x01(\x05R\rwalletIdBuyer\x12&\n" +
 	"\x0ewalletIdSeller\x18\x02 \x01(\x05R\x0ewalletIdSeller\x12\"\n" +
-	"\fproductPrice\x18\x03 \x01(\x01R\fproductPrice\"\xa6\x01\n" +
+	"\fproductPrice\x18\x03 \x01(\x01R\fproductPrice\x12\x1c\n" +
+	"\tproductId\x18\x04 \x01(\x05R\tproductId\"\xa6\x01\n" +
 	"\x12BuyProductResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\aOrderId\x18\x02 \x01(\x05R\aOrderId\x12\x18\n" +

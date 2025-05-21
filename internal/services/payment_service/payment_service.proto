@@ -15,6 +15,7 @@ message BuyProductRequest {
   int32 walletIdBuyer = 1;
   int32 walletIdSeller = 2;
   double productPrice = 3;
+  int32 productId = 4;
 }
 
 message BuyProductResponse {

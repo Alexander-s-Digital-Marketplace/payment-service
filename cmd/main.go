@@ -15,6 +15,7 @@ import (
 
 	loggerconfig "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/config/logger"
 	routespkg "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/routes"
+	paymentlistener "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_listener"
 	pb "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_gen"
 	paymentserviceserver "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/services/payment_service/payment_service_server"
 	"github.com/sirupsen/logrus"
@@ -46,6 +47,8 @@ func main() {
 			log.Fatalf("Failed to serve gRPC server: %v", err)
 		}
 	}()
+
+	go paymentlistener.ListenForPayment()
 
 	select {}
 
