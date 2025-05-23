@@ -7,6 +7,7 @@ option go_package = "/payment_service";
 service PaymentService {
   rpc BuyProduct (BuyProductRequest) returns (BuyProductResponse);
   rpc GetBallance (GetBalanceRequest) returns (GetBalanceResponse);
+  rpc GetWallet (GetWalletRequest) returns (GetWalletResponse);
   rpc RegisterWallet (RegisterWalletRequest) returns (RegisterWalletResponse);
   rpc UpdateWallet (UpdateWalletRequest) returns (UpdateWalletResponse);
 }
@@ -58,6 +59,17 @@ message GetBalanceRequest {
 message GetBalanceResponse {
   int32 code = 1;
   double balance = 2;
+  string message = 3;
+}
+
+
+message GetWalletRequest {
+  int32 walletId = 1;
+}
+
+message GetWalletResponse {
+  int32 code = 1;
+  string wallet = 2;
   string message = 3;
 }
 

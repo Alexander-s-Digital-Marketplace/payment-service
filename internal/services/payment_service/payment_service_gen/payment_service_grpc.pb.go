@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	PaymentService_BuyProduct_FullMethodName     = "/payment.PaymentService/BuyProduct"
 	PaymentService_GetBallance_FullMethodName    = "/payment.PaymentService/GetBallance"
+	PaymentService_GetWallet_FullMethodName      = "/payment.PaymentService/GetWallet"
 	PaymentService_RegisterWallet_FullMethodName = "/payment.PaymentService/RegisterWallet"
 	PaymentService_UpdateWallet_FullMethodName   = "/payment.PaymentService/UpdateWallet"
 )
@@ -31,6 +32,7 @@ const (
 type PaymentServiceClient interface {
 	BuyProduct(ctx context.Context, in *BuyProductRequest, opts ...grpc.CallOption) (*BuyProductResponse, error)
 	GetBallance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
+	GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error)
 	RegisterWallet(ctx context.Context, in *RegisterWalletRequest, opts ...grpc.CallOption) (*RegisterWalletResponse, error)
 	UpdateWallet(ctx context.Context, in *UpdateWalletRequest, opts ...grpc.CallOption) (*UpdateWalletResponse, error)
 }
@@ -63,6 +65,16 @@ func (c *paymentServiceClient) GetBallance(ctx context.Context, in *GetBalanceRe
 	return out, nil
 }
 
+func (c *paymentServiceClient) GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWalletResponse)
+	err := c.cc.Invoke(ctx, PaymentService_GetWallet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *paymentServiceClient) RegisterWallet(ctx context.Context, in *RegisterWalletRequest, opts ...grpc.CallOption) (*RegisterWalletResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RegisterWalletResponse)
@@ -89,6 +101,7 @@ func (c *paymentServiceClient) UpdateWallet(ctx context.Context, in *UpdateWalle
 type PaymentServiceServer interface {
 	BuyProduct(context.Context, *BuyProductRequest) (*BuyProductResponse, error)
 	GetBallance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
+	GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error)
 	RegisterWallet(context.Context, *RegisterWalletRequest) (*RegisterWalletResponse, error)
 	UpdateWallet(context.Context, *UpdateWalletRequest) (*UpdateWalletResponse, error)
 	mustEmbedUnimplementedPaymentServiceServer()
@@ -106,6 +119,9 @@ func (UnimplementedPaymentServiceServer) BuyProduct(context.Context, *BuyProduct
 }
 func (UnimplementedPaymentServiceServer) GetBallance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBallance not implemented")
+}
+func (UnimplementedPaymentServiceServer) GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWallet not implemented")
 }
 func (UnimplementedPaymentServiceServer) RegisterWallet(context.Context, *RegisterWalletRequest) (*RegisterWalletResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterWallet not implemented")
@@ -170,6 +186,24 @@ func _PaymentService_GetBallance_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentService_GetWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentServiceServer).GetWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentService_GetWallet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentServiceServer).GetWallet(ctx, req.(*GetWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PaymentService_RegisterWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RegisterWalletRequest)
 	if err := dec(in); err != nil {
@@ -220,6 +254,10 @@ var PaymentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBallance",
 			Handler:    _PaymentService_GetBallance_Handler,
+		},
+		{
+			MethodName: "GetWallet",
+			Handler:    _PaymentService_GetWallet_Handler,
 		},
 		{
 			MethodName: "RegisterWallet",

@@ -6,7 +6,7 @@ import (
 )
 
 type Wallet struct {
-	Id            int    `gorm:"primaryKey"`
+	Id            int    `gorm:"primaryKey;autoIncrement"`
 	WalletAddress string `gorm:"type:varchar(100);unique;not null"`
 }
 
@@ -16,6 +16,20 @@ func (w *Wallet) AddToTable() int {
 	defer db.CloseDB()
 
 	err := db.Connection.Create(&w).Error
+	if err != nil {
+		logrus.Error("Error add to table: ", err)
+		return 503
+	}
+
+	return 200
+}
+
+func (w *Wallet) UpdateInTable() int {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.Save(&w).Error
 	if err != nil {
 		logrus.Error("Error add to table: ", err)
 		return 503

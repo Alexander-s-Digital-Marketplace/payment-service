@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	api "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/api"
-	authmiddlewares "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/middlewares/auth_middlewares"
 	corsmiddleware "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/middlewares/cors_middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -30,7 +29,6 @@ func NewRouter(handleFunctions ApiHandleFunctions) *gin.Engine {
 func NewRouterWithGinEngine(router *gin.Engine, handleFunctions ApiHandleFunctions) *gin.Engine {
 	router.Use(corsmiddleware.CorsMiddleware())
 	protected := router.Group("/")
-	protected.Use(authmiddlewares.AuthMiddleware())
 	for _, route := range getRoutes(handleFunctions) {
 		if route.HandlerFunc == nil {
 			route.HandlerFunc = DefaultHandleFunc

@@ -485,6 +485,110 @@ func (x *GetBalanceResponse) GetMessage() string {
 	return ""
 }
 
+type GetWalletRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	WalletId      int32                  `protobuf:"varint,1,opt,name=walletId,proto3" json:"walletId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWalletRequest) Reset() {
+	*x = GetWalletRequest{}
+	mi := &file_payment_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWalletRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWalletRequest) ProtoMessage() {}
+
+func (x *GetWalletRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_payment_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWalletRequest.ProtoReflect.Descriptor instead.
+func (*GetWalletRequest) Descriptor() ([]byte, []int) {
+	return file_payment_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetWalletRequest) GetWalletId() int32 {
+	if x != nil {
+		return x.WalletId
+	}
+	return 0
+}
+
+type GetWalletResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Wallet        string                 `protobuf:"bytes,2,opt,name=wallet,proto3" json:"wallet,omitempty"`
+	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWalletResponse) Reset() {
+	*x = GetWalletResponse{}
+	mi := &file_payment_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWalletResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWalletResponse) ProtoMessage() {}
+
+func (x *GetWalletResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_payment_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWalletResponse.ProtoReflect.Descriptor instead.
+func (*GetWalletResponse) Descriptor() ([]byte, []int) {
+	return file_payment_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetWalletResponse) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GetWalletResponse) GetWallet() string {
+	if x != nil {
+		return x.Wallet
+	}
+	return ""
+}
+
+func (x *GetWalletResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_payment_service_proto protoreflect.FileDescriptor
 
 const file_payment_service_proto_rawDesc = "" +
@@ -519,11 +623,18 @@ const file_payment_service_proto_rawDesc = "" +
 	"\x12GetBalanceResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\abalance\x18\x02 \x01(\x01R\abalance\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage2\xbf\x02\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\".\n" +
+	"\x10GetWalletRequest\x12\x1a\n" +
+	"\bwalletId\x18\x01 \x01(\x05R\bwalletId\"Y\n" +
+	"\x11GetWalletResponse\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x16\n" +
+	"\x06wallet\x18\x02 \x01(\tR\x06wallet\x12\x18\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage2\x83\x03\n" +
 	"\x0ePaymentService\x12E\n" +
 	"\n" +
 	"BuyProduct\x12\x1a.payment.BuyProductRequest\x1a\x1b.payment.BuyProductResponse\x12F\n" +
-	"\vGetBallance\x12\x1a.payment.GetBalanceRequest\x1a\x1b.payment.GetBalanceResponse\x12Q\n" +
+	"\vGetBallance\x12\x1a.payment.GetBalanceRequest\x1a\x1b.payment.GetBalanceResponse\x12B\n" +
+	"\tGetWallet\x12\x19.payment.GetWalletRequest\x1a\x1a.payment.GetWalletResponse\x12Q\n" +
 	"\x0eRegisterWallet\x12\x1e.payment.RegisterWalletRequest\x1a\x1f.payment.RegisterWalletResponse\x12K\n" +
 	"\fUpdateWallet\x12\x1c.payment.UpdateWalletRequest\x1a\x1d.payment.UpdateWalletResponseB\x12Z\x10/payment_serviceb\x06proto3"
 
@@ -539,7 +650,7 @@ func file_payment_service_proto_rawDescGZIP() []byte {
 	return file_payment_service_proto_rawDescData
 }
 
-var file_payment_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_payment_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_payment_service_proto_goTypes = []any{
 	(*BuyProductRequest)(nil),      // 0: payment.BuyProductRequest
 	(*BuyProductResponse)(nil),     // 1: payment.BuyProductResponse
@@ -549,18 +660,22 @@ var file_payment_service_proto_goTypes = []any{
 	(*UpdateWalletResponse)(nil),   // 5: payment.UpdateWalletResponse
 	(*GetBalanceRequest)(nil),      // 6: payment.GetBalanceRequest
 	(*GetBalanceResponse)(nil),     // 7: payment.GetBalanceResponse
+	(*GetWalletRequest)(nil),       // 8: payment.GetWalletRequest
+	(*GetWalletResponse)(nil),      // 9: payment.GetWalletResponse
 }
 var file_payment_service_proto_depIdxs = []int32{
 	0, // 0: payment.PaymentService.BuyProduct:input_type -> payment.BuyProductRequest
 	6, // 1: payment.PaymentService.GetBallance:input_type -> payment.GetBalanceRequest
-	2, // 2: payment.PaymentService.RegisterWallet:input_type -> payment.RegisterWalletRequest
-	4, // 3: payment.PaymentService.UpdateWallet:input_type -> payment.UpdateWalletRequest
-	1, // 4: payment.PaymentService.BuyProduct:output_type -> payment.BuyProductResponse
-	7, // 5: payment.PaymentService.GetBallance:output_type -> payment.GetBalanceResponse
-	3, // 6: payment.PaymentService.RegisterWallet:output_type -> payment.RegisterWalletResponse
-	5, // 7: payment.PaymentService.UpdateWallet:output_type -> payment.UpdateWalletResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	8, // 2: payment.PaymentService.GetWallet:input_type -> payment.GetWalletRequest
+	2, // 3: payment.PaymentService.RegisterWallet:input_type -> payment.RegisterWalletRequest
+	4, // 4: payment.PaymentService.UpdateWallet:input_type -> payment.UpdateWalletRequest
+	1, // 5: payment.PaymentService.BuyProduct:output_type -> payment.BuyProductResponse
+	7, // 6: payment.PaymentService.GetBallance:output_type -> payment.GetBalanceResponse
+	9, // 7: payment.PaymentService.GetWallet:output_type -> payment.GetWalletResponse
+	3, // 8: payment.PaymentService.RegisterWallet:output_type -> payment.RegisterWalletResponse
+	5, // 9: payment.PaymentService.UpdateWallet:output_type -> payment.UpdateWalletResponse
+	5, // [5:10] is the sub-list for method output_type
+	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -577,7 +692,7 @@ func file_payment_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_payment_service_proto_rawDesc), len(file_payment_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

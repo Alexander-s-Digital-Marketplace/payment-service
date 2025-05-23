@@ -23,8 +23,9 @@ func (s *Server) RegisterWallet(ctx context.Context, req *pb.RegisterWalletReque
 	}
 
 	return &pb.RegisterWalletResponse{
-		Code:    int32(code),
-		Message: "Success add to table",
+		Code:     int32(code),
+		Message:  "Success add to table",
+		WalletId: int32(wallet.Id),
 	}, nil
 
 }
