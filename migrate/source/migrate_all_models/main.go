@@ -1,44 +1,30 @@
 package main
 
 import (
-	"log"
-
-	"github.com/Alexander-s-Digital-Marketplace/auth-service/internal/database"
-	accountmodel "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/models/account_model"
-	resetpasswordmodel "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/models/reset_password_model"
-	rolemodel "github.com/Alexander-s-Digital-Marketplace/auth-service/internal/models/role_model"
+	loggerconfig "github.com/Alexander-s-Digital-Marketplace/payment-service/internal/config/logger"
+	"github.com/Alexander-s-Digital-Marketplace/payment-service/internal/database"
+	"github.com/Alexander-s-Digital-Marketplace/payment-service/internal/models"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
+	loggerconfig.Init()
 
 	var db database.DataBase
 	db.InitDB()
+	defer db.CloseDB()
 
-	var account accountmodel.UserAccount
-	account.MigrateToDB(db)
-
-	var role rolemodel.Role
-	role.MigrateToDB(db)
-
-	var resetCode resetpasswordmodel.ResetCode
-	resetCode.MigrateToDB(db)
-
-	sqlStatements := []string{
-		`INSERT INTO roles (role, role_string) VALUES
-        ('adm', 'Администратор'),
-        ('mng', 'Менеджер'),
-        ('wtr', 'Официант'),
-        ('ktn', 'Кухня'),
-        ('bar', 'Бар');`,
+	var wallet models.Wallet
+	err := wallet.MigrateToDB(db)
+	if err != nil {
+		logrus.Errorln("Error migrate Wallet model :")
 	}
 
-	for _, stmt := range sqlStatements {
-		if err := db.Connection.Exec(stmt).Error; err != nil {
-			log.Println("Error executing seed: ", stmt, err)
-		}
+	var order models.Order
+	err = order.MigrateToDB(db)
+	if err != nil {
+		logrus.Errorln("Error migrate Order model :")
 	}
-
-	log.Println("Success seeding")
 
 	db.CloseDB()
 }
